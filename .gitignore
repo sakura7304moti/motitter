@@ -1,3 +1,7 @@
 src/__pycache__/
 Data/
 test.ipynb
+src/snscrape/modules/__pycache__/
+src/snscrape/__pycache__/
+src/snscrape/modules/.ipynb_checkpoints/
+src/snscrape/.ipynb_checkpoints/
