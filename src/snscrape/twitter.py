@@ -1096,7 +1096,7 @@ class _TwitterAPIScraper(base.Scraper):
 			if 'type' not in value:
 				# Silently ignore creator/site entries since they frequently appear like this.
 				if key not in ('creator', 'site'):
-                    pass
+                    hshs=1
 					#_logger.warning(f'Skipping type-less card value {key!r} on tweet {tweetId}')
 				continue
 			if value['type'] == 'STRING':
@@ -1107,7 +1107,7 @@ class _TwitterAPIScraper(base.Scraper):
 				bindingValues[key] = value['image_value']['url']
 			elif value['type'] == 'IMAGE_COLOR':
 				# Silently discard this.
-				pass
+				hshs=1
 			elif value['type'] == 'BOOLEAN':
 				bindingValues[key] = value['boolean_value']
 			elif value['type'] == 'USER':
@@ -1530,7 +1530,7 @@ class _TwitterAPIScraper(base.Scraper):
 							yield self._graphql_timeline_tweet_item_result_to_tweet(item['item']['itemContent']['tweet_results']['result'], tweetId = tweetId)
 				elif not entry['entryId'].startswith('cursor-'):
 					#_logger.warning(f'Skipping unrecognised entry ID: {entry["entryId"]!r}')
-                    pass
+                    hshs=1
 
 	def _render_text_with_urls(self, text, urls):
 		if not urls:
