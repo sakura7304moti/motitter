@@ -62,7 +62,7 @@ def save_date_image(date, image_path, mode, query):
     month = str(date.month).zfill(2)
 
     now_week = pd.to_datetime(date).week
-    first_date = datetime.datetime(date.year,date.month,1)
+    first_date = datetime.datetime(date.year, date.month, 1)
     start_week = pd.to_datetime(first_date).week
     if date.month == 1:
         start_week = 1
@@ -174,15 +174,7 @@ def save_good_image(good, image_path, mode, query):
 
 
 # Main Function--------------------------------------------------
-def image_download(csv_path):
-    file_name = os.path.basename(csv_path)
-    query = file_name.replace("#", "")
-    query = query.replace("_" + (query.split("_")[-1]), "")
-    mode = os.path.basename(os.path.dirname(os.path.dirname(csv_path)))
-    print(f"query : {query}")
-    print(f"mode : {mode}")
-
-    tweet_df = pd.read_csv(csv_path, index_col=None)
+def image_download(query, mode, tweet_df):
     tweet_df["images"] = [
         ast.literal_eval(d) for d in tweet_df["images"]
     ]  # images str -> list[str]
