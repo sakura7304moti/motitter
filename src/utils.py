@@ -10,6 +10,7 @@ import yaml
 import sys
 from pathlib import Path
 import shutil
+import requests
 
 # sub import--------------------------------------------------
 from . import const
@@ -29,6 +30,7 @@ def update_options(date=30, limit=3000):
 # ツイートを取得
 def get_tweets(query: str, mode: str):
     print(f"start {query}...")
+    message(f"search start -> {query}")
     if mode == "user":
         scraper = sntwitter.TwitterUserScraper(query)
     else:
@@ -73,6 +75,7 @@ def get_tweets(query: str, mode: str):
     tweet_df = pd.DataFrame(
         tweets, columns=["url", "images", "date", "userId", "userName", "likeCount"]
     )
+    message(f"search finish -> {query}")
     return tweet_df
 
 
@@ -95,6 +98,23 @@ def marge_dataframe(tweet_df, csv_path):
         return result
     else:
         return tweet_df
+
+
+def message(text: str):
+    try:
+        # 取得したTokenを代入
+        line_notify_token = "bLg2L6w7MhUXm5eG1Pyz6jB5IJ8PVU3anYX5FbjUbSc"
+
+        # 送信したいメッセージ
+        message = text
+
+        # Line Notifyを使った、送信部分
+        line_notify_api = "https://notify-api.line.me/api/notify"
+        headers = {"Authorization": f"Bearer {line_notify_token}"}
+        data = {"message": f"{message}"}
+        requests.post(line_notify_api, headers=headers, data=data)
+    except:
+        pass
 
 
 # main function--------------------------------------------------------------------------------------------

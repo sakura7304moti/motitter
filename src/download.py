@@ -11,6 +11,7 @@ from tqdm import tqdm
 from src import const
 import sys
 import ast
+from . import utils
 
 # Option--------------------------------------------------
 output = const.Output()
@@ -175,6 +176,7 @@ def save_good_image(good, image_path, mode, query):
 
 # Main Function--------------------------------------------------
 def image_download(query, mode, tweet_df):
+    utils.message(f"download start -> {query}")
     tweet_df["images"] = [
         ast.literal_eval(d) for d in tweet_df["images"]
     ]  # images str -> list[str]
@@ -201,3 +203,4 @@ def image_download(query, mode, tweet_df):
                 save_date_image(date, save_path, mode, query)  # YYYYMMWWで画像を保存する
                 good = row["likeCount"]
                 save_good_image(good, save_path, mode, query)  # 高評価別で画像を保存する
+    utils.message(f"download finish -> {query} | saved : {saved}")
