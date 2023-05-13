@@ -1096,6 +1096,7 @@ class _TwitterAPIScraper(base.Scraper):
 			if 'type' not in value:
 				# Silently ignore creator/site entries since they frequently appear like this.
 				if key not in ('creator', 'site'):
+                    pass
 					#_logger.warning(f'Skipping type-less card value {key!r} on tweet {tweetId}')
 				continue
 			if value['type'] == 'STRING':
