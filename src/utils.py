@@ -1,7 +1,9 @@
 # Import--------------------------------------------------
 import pandas as pd
 from tqdm import tqdm
-import snscrape.modules.twitter as sntwitter
+
+# import snscrape.modules.twitter as sntwitter
+from .snscrape import twitter as sntwitter
 import time
 import os
 import urllib
