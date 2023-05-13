@@ -912,7 +912,7 @@ class _TwitterAPIScraper(base.Scraper):
 			if 'promotedMetadata' in entry['item']['content']['tweet']: # Promoted tweet aka ads
 				return
 			if entry['item']['content']['tweet']['id'] not in obj['globalObjects']['tweets']:
-				_logger.warning(f'Skipping tweet {entry["item"]["content"]["tweet"]["id"]} which is not in globalObjects')
+				#_logger.warning(f'Skipping tweet {entry["item"]["content"]["tweet"]["id"]} which is not in globalObjects')
 				return
 			tweet = obj['globalObjects']['tweets'][entry['item']['content']['tweet']['id']]
 		else:
@@ -1023,11 +1023,11 @@ class _TwitterAPIScraper(base.Scraper):
 			if '?format=' in medium['media_url_https'] or '&format=' in medium['media_url_https']:
 				return Photo(previewUrl = medium['media_url_https'], fullUrl = medium['media_url_https'])
 			if '.' not in medium['media_url_https']:
-				_logger.warning(f'Skipping malformed medium URL on tweet {tweetId}: {medium["media_url_https"]!r} contains no dot')
+				#_logger.warning(f'Skipping malformed medium URL on tweet {tweetId}: {medium["media_url_https"]!r} contains no dot')
 				return
 			baseUrl, format = medium['media_url_https'].rsplit('.', 1)
 			if format not in ('jpg', 'png'):
-				_logger.warning(f'Skipping photo with unknown format on tweet {tweetId}: {format!r}')
+				#_logger.warning(f'Skipping photo with unknown format on tweet {tweetId}: {format!r}')
 				return
 			mKwargs = {
 				'previewUrl': f'{baseUrl}?format={format}&name=small',
@@ -1096,7 +1096,7 @@ class _TwitterAPIScraper(base.Scraper):
 			if 'type' not in value:
 				# Silently ignore creator/site entries since they frequently appear like this.
 				if key not in ('creator', 'site'):
-					_logger.warning(f'Skipping type-less card value {key!r} on tweet {tweetId}')
+					#_logger.warning(f'Skipping type-less card value {key!r} on tweet {tweetId}')
 				continue
 			if value['type'] == 'STRING':
 				bindingValues[key] = value['string_value']
@@ -1506,7 +1506,7 @@ class _TwitterAPIScraper(base.Scraper):
 					tweetId = int(entry['entryId'].split('-', 1)[1])
 					if entry['content']['entryType'] == 'TimelineTimelineItem' and entry['content']['itemContent']['itemType'] == 'TimelineTweet':
 						if 'result' not in entry['content']['itemContent']['tweet_results']:
-							_logger.warning(f'Skipping empty tweet entry {entry["entryId"]}')
+							#_logger.warning(f'Skipping empty tweet entry {entry["entryId"]}')
 							continue
 						yield self._graphql_timeline_tweet_item_result_to_tweet(entry['content']['itemContent']['tweet_results']['result'], tweetId = tweetId)
 					else:
@@ -1528,7 +1528,8 @@ class _TwitterAPIScraper(base.Scraper):
 							tweetId = int(item['entryId'][len(entry['entryId']) + 7:])
 							yield self._graphql_timeline_tweet_item_result_to_tweet(item['item']['itemContent']['tweet_results']['result'], tweetId = tweetId)
 				elif not entry['entryId'].startswith('cursor-'):
-					_logger.warning(f'Skipping unrecognised entry ID: {entry["entryId"]!r}')
+					#_logger.warning(f'Skipping unrecognised entry ID: {entry["entryId"]!r}')
+                    pass
 
 	def _render_text_with_urls(self, text, urls):
 		if not urls:
