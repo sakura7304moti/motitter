@@ -122,13 +122,7 @@ def message(text: str):
 # main function--------------------------------------------------------------------------------------------
 def get_df(query: str, mode: str, date: int = 30, limit: int = 3000):
     update_options(date, limit)
-    while True:
-        try:
-            df = get_tweets(query, mode)
-        except Exception as e:
-            print(f"err -> {e}")
-        else:
-            break
+    df = get_tweets(query, mode)
 
     if mode == "base":
         csv_path = output.base_database(query)
