@@ -1072,9 +1072,9 @@ class _TwitterAPIScraper(base.Scraper):
                 entry["item"]["content"]["tweet"]["id"]
                 not in obj["globalObjects"]["tweets"]
             ):
-                _logger.warning(
-                    f'Skipping tweet {entry["item"]["content"]["tweet"]["id"]} which is not in globalObjects'
-                )
+                # _logger.warning(
+                #    f'Skipping tweet {entry["item"]["content"]["tweet"]["id"]} which is not in globalObjects'
+                # )
                 return
             tweet = obj["globalObjects"]["tweets"][
                 entry["item"]["content"]["tweet"]["id"]
@@ -2132,9 +2132,10 @@ class _TwitterAPIScraper(base.Scraper):
                                 tweetId=tweetId,
                             )
                 elif not entry["entryId"].startswith("cursor-"):
-                    _logger.warning(
-                        f'Skipping unrecognised entry ID: {entry["entryId"]!r}'
-                    )
+                    #_logger.warning(
+                    #    f'Skipping unrecognised entry ID: {entry["entryId"]!r}'
+                    #)
+                    continue
 
     def _render_text_with_urls(self, text, urls):
         if not urls:

@@ -30,7 +30,7 @@ scraper = Scraper()
 # downloader
 class Downloader:
     def base_downloader(self, query: str, df=None):
-        if df == None:
+        if type(df) != pd.core.frame.DataFrame:
             csv_path = output.base_database(query)
             df = pd.read_csv(csv_path)
         download.image_download(query, "base", df)
@@ -42,7 +42,7 @@ class Downloader:
             download.image_download(query, "holo", df)
 
     def user_downloader(self, query: str, df=None):
-        if df == None:
+        if type(df) != pd.core.frame.DataFrame:
             csv_path = output.user_database(query)
             df = pd.read_csv(csv_path)
         download.image_download(query, "user", df)
