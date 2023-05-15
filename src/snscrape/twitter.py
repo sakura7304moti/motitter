@@ -884,8 +884,8 @@ class _TwitterAPIScraper(base.Scraper):
                 instructions = instructions.get(k, {})
             if instructions:
                 _logger.warning(msg)
-            else:
-                raise base.ScraperException(msg)
+            #else:
+            #    raise base.ScraperException(msg)
         return obj
 
     def _iter_api_data(
