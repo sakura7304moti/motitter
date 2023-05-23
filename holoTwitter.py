@@ -1,4 +1,4 @@
 from src import moti
 
-getter = moti.getter()
-getter.holo_getter(1800, 50000)
+model = moti.Downloader()
+model.holo_downloader()

@@ -54,7 +54,7 @@ downloader = Downloader()
 
 
 # main
-class getter:
+class Getter:
     def base_getter(self, query: str, date: int = 30, limit: int = 3000):
         df = scraper.base_scraper(query, date, limit)
         downloader.base_downloader(query, df)
