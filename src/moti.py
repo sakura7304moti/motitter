@@ -31,10 +31,9 @@ scraper = Scraper()
 
 # downloader
 class Downloader:
-    def base_downloader(self, query: str, df=None):
-        if type(df) != pd.core.frame.DataFrame:
-            csv_path = output.base_database(query)
-            df = pd.read_csv(csv_path)
+    def base_downloader(self, query: str):
+        csv_path = output.base_database(query)
+        df = pd.read_csv(csv_path)
         download.image_download(query, "base", df)
 
     def holo_downloader(self):
@@ -43,10 +42,9 @@ class Downloader:
             df = pd.read_csv(csv_path)
             download.image_download(query, "holo", df)
 
-    def user_downloader(self, query: str, df=None):
-        if type(df) != pd.core.frame.DataFrame:
-            csv_path = output.user_database(query)
-            df = pd.read_csv(csv_path)
+    def user_downloader(self, query: str):
+        csv_path = output.user_database(query)
+        df = pd.read_csv(csv_path)
         download.image_download(query, "user", df)
 
 
@@ -56,13 +54,13 @@ downloader = Downloader()
 # main
 class Getter:
     def base_getter(self, query: str, date: int = 30, limit: int = 3000):
-        df = scraper.base_scraper(query, date, limit)
-        downloader.base_downloader(query, df)
+        scraper.base_scraper(query, date, limit)
+        downloader.base_downloader(query)
 
     def holo_getter(self, date: int = 30, limit: int = 3000):
         scraper.holo_scraper(date, limit)
         downloader.holo_downloader()
 
     def user_getter(self, query: str, date: int = 30, limit: int = 3000):
-        df = scraper.user_scraper(query, date, limit)
-        downloader.user_downloader(query, df)
+        scraper.user_scraper(query, date, limit)
+        downloader.user_downloader(query)
