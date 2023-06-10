@@ -6,3 +6,4 @@ src/snscrape/__pycache__/
 src/snscrape/modules/.ipynb_checkpoints/
 src/snscrape/.ipynb_checkpoints/
 .ipynb_checkpoints/
+src/data_delete.py
