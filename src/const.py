@@ -64,8 +64,56 @@ class Output:
 
     def user_image(self, userName: str):
         return os.path.join(self._base_path, self._yml["user"]["image"], f"{userName}")
+    
+    def sqlite_db(self):
+        return os.path.join(self._base_path,'sns.db')
 
 #Option--------------------------------------------------
 class options:
     limit_date = 30
     limit_tweets = 3000
+
+#QueryRecord---------------------------------------------
+import sqlite3
+import datetime
+class TwitterQueryRecord:
+    hashtag:str
+    mode:str
+    url:str
+    date:datetime.date
+    images:list[str]
+    userId:str
+    userName:str
+    likeCount:int
+
+    def __init__(
+        self,
+        hashtag:str,
+        mode:str,
+        url:str,
+        date:str,
+        images:str,
+        userId:str,
+        userName:str,
+        likeCount:int):
+
+        self.hashtag = hashtag
+        self.mode = mode
+        self.url = url
+        self.date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        self.images = images.split(',')
+        self.userId = userId
+        self.userName = userName
+        self.likeCount = likeCount
+    
+    def __str__(self):
+        return (
+            f"Hashtag: {self.hashtag}\n"
+            f"Mode: {self.mode}\n"
+            f"URL: {self.url}\n"
+            f"Date: {self.date}\n"
+            f"Images: {self.images}\n"
+            f"User ID: {self.userId}\n"
+            f"User Name: {self.userName}\n"
+            f"Like Count: {self.likeCount}\n"
+        )
