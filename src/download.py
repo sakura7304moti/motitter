@@ -70,6 +70,7 @@ def image_download(query, mode, tweet_df):
             if not os.path.exists(save_path):
                 try:
                     download(url, save_path)
+                    saved = saved + 1
                 except Exception as e:
                     print(e)
                     pass
