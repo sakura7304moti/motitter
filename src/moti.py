@@ -18,8 +18,7 @@ class Scraper:
 
     def holo_scraper(self, date: int = 30, limit: int = 3000):
         for query in tqdm(holoList, desc="query"):
-            if not os.path.exists(output.holo_database(query)):
-                utils.get_holo_twitter_df(query, date, limit)
+            utils.get_holo_twitter_df(query, date, limit)
 
     def user_scraper(self, query: str, date: int = 30, limit: int = 3000):
         df = utils.get_user_twitter_df(query, date, limit)
