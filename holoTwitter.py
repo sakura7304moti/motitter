@@ -1,5 +1,9 @@
 from src import moti
 from src import utils
 
-model = moti.Getter()
-model.holo_getter(30, 10000)
+try:
+    model = moti.Getter()
+    model.holo_getter(30, 10000)
+except Exception as e:
+    print(e)
+    utils.message(e)
