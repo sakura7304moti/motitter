@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import yaml
+import glob
 
 # プロジェクトの相対パス
 base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -67,6 +68,10 @@ class Output:
     
     def sqlite_db(self):
         return os.path.join(self._base_path,'sns.db')
+    
+    def database_list(self):
+        files = glob.glob(os.path.join(self._base_path,'*','*.csv'))
+        return files
 
 #Option--------------------------------------------------
 class options:

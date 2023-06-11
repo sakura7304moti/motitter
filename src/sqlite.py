@@ -229,3 +229,15 @@ def search_count(
     results = cursor.fetchall()
 
     return results[0][0]
+
+"""
+UPDATE ALL
+"""
+def update_all():
+    files = output.database_list()
+    for file in tqdm(files,desc='UPDATE ALL'):
+        dir_name = os.path.dirname(file)
+        mode = os.path.basename(dir_name)
+        print(f'csv_path : {file}')
+        print(f'mode : {mode}')
+        update(file,mode)
