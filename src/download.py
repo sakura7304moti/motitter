@@ -65,7 +65,8 @@ def image_download(query, mode, tweet_df):
         tweet_df.iterrows(), total=len(tweet_df), desc="image DL"
     ):  # 画像のダウンロード&保存処理
         images = row["images"]
-        for url in images:
+        urls = images.replace("[", "").replace("]", "").replace("'", "").split(",")
+        for url in urls:
             save_path = get_save_path(url, mode, query)
             if not os.path.exists(save_path):
                 try:
