@@ -60,10 +60,6 @@ def get_save_path(url, mode, query):
 # Main Function--------------------------------------------------
 def image_download(query, mode, tweet_df):
     utils.message(f"download start -> {query}")
-    tweet_df["images"] = [
-        ast.literal_eval(d) for d in tweet_df["images"]
-    ]  # images str -> list[str]
-
     saved = 0
     for index, row in tqdm(
         tweet_df.iterrows(), total=len(tweet_df), desc="image DL"
