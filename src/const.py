@@ -21,7 +21,7 @@ def _output() -> dict:
         yml = yaml.safe_load(file)
     return yml
 
-
+#各保存先
 class Output:
     def __init__(self):
         self._base_path = base_path
@@ -72,11 +72,51 @@ class Output:
     def database_list(self):
         files = glob.glob(os.path.join(self._base_path,'*','*.csv'))
         return files
+    
+#スケジューラーで取得するハッシュタグ
+class hashtags:
+    def base_hashtags():
+        csv_path = os.path.join(base_path,'option','base_sc.csv')
+        df = pd.read_csv(csv_path)
+        return df['hashtag'].to_list()
+    
+    def holo_hashtags():
+        return holoList()
+    
+    def user_hashtags():
+        csv_path = os.path.join(base_path,'option','user_sc.csv')
+        df = pd.read_csv(csv_path)
+        return df['hashtag'].to_list()
 
 #Option--------------------------------------------------
 class options:
     limit_date = 30
     limit_tweets = 3000
+
+def _option_sc() -> dict:
+    yaml_path = os.path.join(base_path, "option", "sc_option.yaml")
+    with open(yaml_path) as file:
+        yml = yaml.safe_load(file)
+    return yml
+
+class option_sc:
+    def __init__(self):
+        self._yml = _option_sc()
+
+    def _get_option(self,key:str):
+        date = self._yml[key]['date']
+        limit = self._yml[key]['limit']
+        return date,limit
+    
+    def base_option(self):
+        return self._get_option('base')
+    
+    def holo_option(self):
+        return self._get_option('holo')
+    
+    def user_option(self):
+        return self._get_option('user')
+    
 
 #QueryRecord---------------------------------------------
 import sqlite3
