@@ -1,6 +1,7 @@
 from . import download
 from . import utils
 from . import const
+from . import sqlite
 import pandas as pd
 
 output = const.Output()
@@ -55,11 +56,19 @@ class Getter:
     def base_getter(self, query: str, date: int = 30, limit: int = 3000):
         scraper.base_scraper(query, date, limit)
         downloader.base_downloader(query)
+        csv_path = output.base_database(query)
+        sqlite.update(csv_path,'base')
 
     def holo_getter(self, date: int = 30, limit: int = 3000):
         scraper.holo_scraper(date, limit)
         downloader.holo_downloader()
+        for hashtag in holoList:
+            csv_path = output.holo_database(hashtag)
+            sqlite.update(csv_path,'holo')
+
 
     def user_getter(self, query: str, date: int = 30, limit: int = 3000):
         scraper.user_scraper(query, date, limit)
         downloader.user_downloader(query)
+        csv_path = output.user_database(query)
+        sqlite.update(csv_path,'user')

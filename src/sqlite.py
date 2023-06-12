@@ -54,7 +54,12 @@ import pandas as pd
 import os
 from tqdm import tqdm
 import datetime
+from . import const
+from . import utils
+output = const.Output()
+
 def update(csv_path:str,mode:str):
+    utils.message(f'update start {csv_path}')
     # 正規表現パターン
     pattern = r'[\'"\[\]]'
 
@@ -66,7 +71,7 @@ def update(csv_path:str,mode:str):
     df = pd.read_csv(csv_path)
     file_name = os.path.basename(csv_path)
     hashtag = file_name.replace('_database.csv','')
-
+    
     for index,row in tqdm(df.iterrows(),total=len(df),desc='INSERT'):
 
         #要素の取得
@@ -116,6 +121,7 @@ def update(csv_path:str,mode:str):
     # 変更をコミットし、接続を閉じる
     conn.commit()
     conn.close()
+    utils.message(f'update finish {csv_path}')
 
 """
 SELECT PAGE
