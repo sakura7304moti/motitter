@@ -8,3 +8,5 @@ src/snscrape/.ipynb_checkpoints/
 .ipynb_checkpoints/
 src/data_delete.py
 test2.ipynb
+sns.db
+sns.db-journal
