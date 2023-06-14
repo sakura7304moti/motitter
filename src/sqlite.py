@@ -14,7 +14,7 @@ CREATE DB
 import sqlite3
 # sns.dbを作成する
 # すでに存在していれば、それにアスセスする。
-dbname = output.sqlite_db
+dbname = output.sqlite_db()
 conn = sqlite3.connect(dbname)
 
 # データベースへのコネクションを閉じる。(必須)
