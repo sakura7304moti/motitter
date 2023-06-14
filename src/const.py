@@ -70,7 +70,7 @@ class Output:
         return os.path.join(self._base_path,'sns.db')
     
     def database_list(self):
-        files = glob.glob(os.path.join(self._base_path,'*','*.csv'))
+        files = glob.glob(os.path.join(self._base_path,'Data','Twitter','*','Database','*.csv'))
         return files
     
 #スケジューラーで取得するハッシュタグ
