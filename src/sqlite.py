@@ -72,6 +72,19 @@ def update(csv_path:str,mode:str):
     file_name = os.path.basename(csv_path)
     hashtag = file_name.replace('_database.csv','')
     
+    # レコードの存在をチェックするためのクエリを作成する
+    check_query = f"SELECT * FROM twitter WHERE hashtag = '{hashtag}'"
+
+    # クエリを実行して結果を取得する
+    cursor.execute(check_query)
+    result = cursor.fetchall()
+
+    #hashtag + URL のリストを作成
+    if result is None:
+        hash_list = []
+    else:
+        hash_list = [r[0]+r[2] for r in result]
+    
     for index,row in tqdm(df.iterrows(),total=len(df),desc='INSERT'):
 
         #要素の取得
@@ -84,16 +97,9 @@ def update(csv_path:str,mode:str):
         userName = row['userName']
         userName = re.sub(pattern,'',userName)
         likeCount = int(row['likeCount'])
-
-        # レコードの存在をチェックするためのクエリを作成する
-        check_query = f"SELECT url FROM twitter WHERE url = '{url}'"
-
-        # クエリを実行して結果を取得する
-        cursor.execute(check_query)
-        result = cursor.fetchone()
-
+        
         # レコードが存在しない場合は追加、存在する場合は更新する
-        if result is None:
+        if hashtag + url not in hash_list:
             # レコードを追加するクエリを作成する
             insert_query = f"""
                 INSERT INTO twitter (hashtag,mode,url,date,images,userId,userName,likeCount)
