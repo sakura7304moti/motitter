@@ -163,7 +163,7 @@ def searchQuery(
     if page_size != 0:
         limit_sql = 'limit :page_size offset :offset'
         query = query + limit_sql
-
+        
     args = {
         'hashtag':f'%{hashtag}%',
         'start_date':start_date,
@@ -179,6 +179,7 @@ def searchQuery(
 
 def search(
         page_no:int=1,
+        page_size:int=30,
         hashtag:str='',
         start_date:str='',
         end_date:str='',
@@ -193,6 +194,7 @@ def search(
     # SELECTクエリを実行
     query,args = searchQuery(
         page_no,
+        page_size,
         hashtag,
         start_date,
         end_date,

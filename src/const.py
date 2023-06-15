@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import yaml
 import glob
+import json
 
 # プロジェクトの相対パス
 base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -117,6 +118,13 @@ class option_sc:
     def user_option(self):
         return self._get_option('user')
     
+class api_option:
+    def __init__(self):
+        self._json_path = os.path.join(base_path,'option','config.json')
+        # ファイルを開いてJSONデータを読み取る
+        with open(self._json_path, "r") as file:
+            json_data = json.load(file)
+        self.PAGE_SIZE:int = json_data.get("PAGE_SIZE",0)
 
 #QueryRecord---------------------------------------------
 import sqlite3
@@ -162,3 +170,15 @@ class TwitterQueryRecord:
             f"User Name: {self.userName}\n"
             f"Like Count: {self.likeCount}\n"
         )
+    
+    def __dict__(self):
+        return {
+            'hashtag': self.hashtag,
+            'mode': self.mode,
+            'url': self.url,
+            'date': self.date.strftime('%Y-%m-%d'),
+            'images': self.images,
+            'userId': self.userId,
+            'userName': self.userName,
+            'likeCount': self.likeCount
+        }
