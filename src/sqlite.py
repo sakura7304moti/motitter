@@ -95,7 +95,10 @@ def update(csv_path:str,mode:str):
         images = re.sub(pattern,'',images)
         userId = row['userId']
         userName = row['userName']
-        userName = re.sub(pattern,'',userName)
+        try:
+            userName = re.sub(pattern,'',userName)
+        except:
+            userName = ''
         likeCount = int(row['likeCount'])
         
         # レコードが存在しない場合は追加、存在する場合は更新する
