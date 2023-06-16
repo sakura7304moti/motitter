@@ -110,22 +110,22 @@ def update(csv_path:str,mode:str):
             
             # レコードを追加する
             cursor.execute(insert_query)
-        else:
-            # レコードを更新するクエリを作成する
-            update_query = f"""
-            UPDATE twitter SET
-                hashtag = '{hashtag}',
-                mode = '{mode}',
-                url = '{url}',
-                date = '{date}',
-                images = '{images}',
-                userId = '{userId}',
-                userName = "{userName}",
-                likeCount = {likeCount}
-            WHERE url = '{url}'"""
+        #else:
+        #    # レコードを更新するクエリを作成する
+        #    update_query = f"""
+        #    UPDATE twitter SET
+        #        hashtag = '{hashtag}',
+        #        mode = '{mode}',
+        #        url = '{url}',
+        #        date = '{date}',
+        #        images = '{images}',
+        #        userId = '{userId}',
+        #        userName = "{userName}",
+        #        likeCount = {likeCount}
+        #    WHERE url = '{url}'"""
             
             # レコードを更新する
-            cursor.execute(update_query)
+        #    cursor.execute(update_query)
         
     # 変更をコミットし、接続を閉じる
     conn.commit()
