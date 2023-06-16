@@ -38,7 +38,7 @@ def search():
 
     # レスポンスとしてJSONデータを返す
     # JSON文字列に変換
-    json_data = json.dumps(records, default=lambda obj: obj.__dict__())
+    json_data = json.dumps(records, default=lambda obj: obj.__dict__(),ensure_ascii=False)
     response = jsonify(json_data)
     return response
 
