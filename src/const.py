@@ -22,7 +22,8 @@ def _output() -> dict:
         yml = yaml.safe_load(file)
     return yml
 
-#各保存先
+
+# 各保存先
 class Output:
     def __init__(self):
         self._base_path = base_path
@@ -66,33 +67,38 @@ class Output:
 
     def user_image(self, userName: str):
         return os.path.join(self._base_path, self._yml["user"]["image"], f"{userName}")
-    
-    def sqlite_db(self):
-        return os.path.join(self._base_path,'sns.db')
-    
-    def database_list(self):
-        files = glob.glob(os.path.join(self._base_path,'Data','Twitter','*','Database','*.csv'))
-        return files
-    
-#スケジューラーで取得するハッシュタグ
-class hashtags:
-    def base_hashtags():
-        csv_path = os.path.join(base_path,'option','base_sc.csv')
-        df = pd.read_csv(csv_path)
-        return df['hashtag'].to_list()
-    
-    def holo_hashtags():
-        return holoList()
-    
-    def user_hashtags():
-        csv_path = os.path.join(base_path,'option','user_sc.csv')
-        df = pd.read_csv(csv_path)
-        return df['hashtag'].to_list()
 
-#Option--------------------------------------------------
+    def sqlite_db(self):
+        return os.path.join(self._base_path, "sns.db")
+
+    def database_list(self):
+        files = glob.glob(
+            os.path.join(self._base_path, "Data", "Twitter", "*", "Database", "*.csv")
+        )
+        return files
+
+
+# スケジューラーで取得するハッシュタグ
+class hashtags:
+    def base_hashtags(self):
+        csv_path = os.path.join(base_path, "option", "base_sc.csv")
+        df = pd.read_csv(csv_path)
+        return df["hashtag"].to_list()
+
+    def holo_hashtags(self):
+        return holoList()
+
+    def user_hashtags(self):
+        csv_path = os.path.join(base_path, "option", "user_sc.csv")
+        df = pd.read_csv(csv_path)
+        return df["hashtag"].to_list()
+
+
+# Option--------------------------------------------------
 class options:
     limit_date = 30
     limit_tweets = 3000
+
 
 def _option_sc() -> dict:
     yaml_path = os.path.join(base_path, "option", "sc_option.yaml")
@@ -100,65 +106,70 @@ def _option_sc() -> dict:
         yml = yaml.safe_load(file)
     return yml
 
+
 class option_sc:
     def __init__(self):
         self._yml = _option_sc()
 
-    def _get_option(self,key:str):
-        date = self._yml[key]['date']
-        limit = self._yml[key]['limit']
-        return date,limit
-    
+    def _get_option(self, key: str):
+        date = self._yml[key]["date"]
+        limit = self._yml[key]["limit"]
+        return date, limit
+
     def base_option(self):
-        return self._get_option('base')
-    
+        return self._get_option("base")
+
     def holo_option(self):
-        return self._get_option('holo')
-    
+        return self._get_option("holo")
+
     def user_option(self):
-        return self._get_option('user')
-    
+        return self._get_option("user")
+
+
 class api_option:
     def __init__(self):
-        self._json_path = os.path.join(base_path,'option','config.json')
+        self._json_path = os.path.join(base_path, "option", "config.json")
         # ファイルを開いてJSONデータを読み取る
         with open(self._json_path, "r") as file:
             json_data = json.load(file)
-        self.PAGE_SIZE:int = json_data.get("PAGE_SIZE",0)
+        self.PAGE_SIZE: int = json_data.get("PAGE_SIZE", 0)
 
-#QueryRecord---------------------------------------------
+
+# QueryRecord---------------------------------------------
 import sqlite3
 import datetime
+
+
 class TwitterQueryRecord:
-    hashtag:str
-    mode:str
-    url:str
-    date:datetime.date
-    images:list[str]
-    userId:str
-    userName:str
-    likeCount:int
+    hashtag: str
+    mode: str
+    url: str
+    date: datetime.date
+    images: list[str]
+    userId: str
+    userName: str
+    likeCount: int
 
     def __init__(
         self,
-        hashtag:str,
-        mode:str,
-        url:str,
-        date:str,
-        images:str,
-        userId:str,
-        userName:str,
-        likeCount:int):
-
+        hashtag: str,
+        mode: str,
+        url: str,
+        date: str,
+        images: str,
+        userId: str,
+        userName: str,
+        likeCount: int,
+    ):
         self.hashtag = hashtag
         self.mode = mode
         self.url = url
         self.date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        self.images = images.split(',')
+        self.images = images.split(",")
         self.userId = userId
         self.userName = userName
         self.likeCount = likeCount
-    
+
     def __str__(self):
         return (
             f"Hashtag: {self.hashtag}\n"
@@ -170,15 +181,15 @@ class TwitterQueryRecord:
             f"User Name: {self.userName}\n"
             f"Like Count: {self.likeCount}\n"
         )
-    
+
     def __dict__(self):
         return {
-            'hashtag': self.hashtag,
-            'mode': self.mode,
-            'url': self.url,
-            'date': self.date.strftime('%Y-%m-%d'),
-            'images': self.images,
-            'userId': self.userId,
-            'userName': self.userName,
-            'likeCount': self.likeCount
+            "hashtag": self.hashtag,
+            "mode": self.mode,
+            "url": self.url,
+            "date": self.date.strftime("%Y-%m-%d"),
+            "images": self.images,
+            "userId": self.userId,
+            "userName": self.userName,
+            "likeCount": self.likeCount,
         }
