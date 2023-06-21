@@ -17,8 +17,7 @@ try:
     """
     date, limit = option.holo_option()
     hashtags = tag.holo_hashtags()
-    for p in hashtags:
-        model.holo_getter(p, date, limit)
+    model.holo_getter(date, limit)
     """
     USER
     """
